@@ -1,4 +1,7 @@
+import type { RefObject } from "react";
 import Prompt from "./Prompt";
+import { autocomplete } from "../../engine/autocomplete";
+import type { TerminalContext } from "../../types/terminal";
 
 interface Props {
   path: string[];
@@ -8,6 +11,8 @@ interface Props {
   commandHistory: string[];
   historyIndex: number;
   setHistoryIndex: React.Dispatch<React.SetStateAction<number>>;
+  inputRef: RefObject<HTMLInputElement | null>;
+  context: TerminalContext;
 }
 
 export default function TerminalInput({
@@ -18,6 +23,8 @@ export default function TerminalInput({
   commandHistory,
   historyIndex,
   setHistoryIndex,
+  context,
+  inputRef,
 }: Props) {
   return (
     <div>
@@ -26,7 +33,21 @@ export default function TerminalInput({
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        ref={inputRef}
         onKeyDown={(e) => {
+          if (e.key === "Tab") {
+            e.preventDefault();
+            const matches = autocomplete(input, context);
+            if (matches.length === 1) {
+              const words = input.trim().split(/\s+/);
+              if (words.length === 1) {
+                setInput(matches[0]);
+              } else {
+                words[words.length - 1] = matches[0];
+                setInput(words.join(" "));
+              }
+            }
+          }
           if (e.key === "Enter") {
             runCommand();
           }

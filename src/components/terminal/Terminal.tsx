@@ -1,6 +1,7 @@
 import { useTerminal } from "../../hooks/useTerminal";
 import TerminalHistory from "./TerminalHistory";
 import TerminalInput from "./TerminalInput";
+import { useRef, useEffect } from "react";
 
 export default function Terminal() {
   const {
@@ -14,6 +15,17 @@ export default function Terminal() {
     setHistoryIndex,
   } = useTerminal();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+    inputRef.current?.focus();
+  }, [history]);
+
   return (
     <div
       style={{
@@ -22,7 +34,6 @@ export default function Terminal() {
       }}
     >
       <TerminalHistory history={history} path={[]} />
-
       <TerminalInput
         path={context.currentPath}
         input={input}
@@ -31,7 +42,10 @@ export default function Terminal() {
         commandHistory={commandHistory}
         historyIndex={historyIndex}
         setHistoryIndex={setHistoryIndex}
+        inputRef={inputRef}
+        context={context}
       />
+      <div ref={bottomRef} />
     </div>
   );
 }
