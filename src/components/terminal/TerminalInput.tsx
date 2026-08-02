@@ -27,13 +27,15 @@ export default function TerminalInput({
   inputRef,
 }: Props) {
   return (
-    <div>
+  <div className="flex items-center gap-2">
       <Prompt path={path} />
 
       <input
+        ref={inputRef}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        ref={inputRef}
+        
+        className="flex-1 bg-transparent text-white resize-none outline-none overflow-hidden break-all whitespace-pre-wrap "
         onKeyDown={(e) => {
           if (e.key === "Tab") {
             e.preventDefault();
