@@ -15,5 +15,3 @@ export function parse(input: string): ParsedCommand {
     return {command,args}
    
 }
-// parse(" cat resume.txt    abcd.txt");
-console.log(parse(""))
