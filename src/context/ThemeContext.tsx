@@ -1,5 +1,6 @@
 import {
   createContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -14,8 +15,6 @@ interface ThemeContextType {
   colors: (typeof themes)[Theme];
 }
 
-
-
 // eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<ThemeContextType | null>(null);
 
@@ -24,10 +23,26 @@ interface Props {
 }
 
 export function ThemeProvider({ children }: Props) {
-  const [theme, setTheme] = useState<Theme>("green");
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem("terminal-theme");
+
+    if (
+      saved === "green" ||
+      saved === "amber" ||
+      saved === "cyan" ||
+      saved === "matrix" ||
+      saved === "white"
+    ) {
+      return saved;
+    }
+
+    return "green";
+  });
 
   const colors = useMemo(() => themes[theme], [theme]);
-
+  useEffect(() => {
+    localStorage.setItem("terminal-theme", theme);
+  }, [theme]);
   return (
     <ThemeContext.Provider
       value={{
@@ -40,5 +55,3 @@ export function ThemeProvider({ children }: Props) {
     </ThemeContext.Provider>
   );
 }
-
-
