@@ -1,10 +1,13 @@
 
 import type { FSNode } from "../types/filesystem";
 import type { TerminalContext } from "../types/terminal";
-import { root } from "./fileSystem";
 
-export function getNode(path: string[]): FSNode | null {
-  let current: FSNode = root;
+
+export function getNode(
+  root: FSNode,
+  path: string[]
+): FSNode | null {
+  let current = root;
 
   for (const part of path) {
     if (!current.children) {
@@ -13,7 +16,8 @@ export function getNode(path: string[]): FSNode | null {
 
     const next = current.children.find(
       (child) =>
-        child.name === part && child.type === "directory"
+        child.name === part &&
+        child.type === "directory"
     );
 
     if (!next) {
@@ -29,9 +33,8 @@ export function getNode(path: string[]): FSNode | null {
 export function getCurrentDirectory(
   context: TerminalContext
 ): FSNode | null {
-  return getNode(context.currentPath);
+  return getNode(context.root, context.currentPath);
 }
-
 export function findChild(
   node: FSNode,
   name: string

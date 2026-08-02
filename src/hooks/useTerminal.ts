@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { execute } from "../engine/executor";
-import {parse} from "../engine/parser"
+import { parse } from "../engine/parser";
+import type { TerminalContext } from "../types/terminal";
+import { root } from "../filesystem/fileSystem";
+
 export interface HistoryItem {
   command: string;
   output: string;
@@ -12,8 +15,9 @@ export function useTerminal() {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
-  const [context] = useState({
-    currentPath: [] as string[],
+  const [context] = useState<TerminalContext>({
+    currentPath: [],
+    root: structuredClone(root),
   });
 
   function runCommand() {
