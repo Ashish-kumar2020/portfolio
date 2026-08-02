@@ -9,6 +9,7 @@ import { touch } from "../commands/touch";
 import { rm } from "../commands/rm";
 import { tree } from "../commands/tree";
 import { projectsCommand } from "../commands/projectsCommand";
+import { skillsCommand } from "../commands/skills";
 
 export const registry = {
   help,
@@ -22,4 +23,5 @@ export const registry = {
   rm,
   tree,
   project: projectsCommand,
+  skills: skillsCommand
 };
