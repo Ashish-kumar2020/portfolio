@@ -8,6 +8,7 @@ import { mkdir } from "../commands/mkdir";
 import { touch } from "../commands/touch";
 import { rm } from "../commands/rm";
 import { tree } from "../commands/tree";
+import { projectsCommand } from "../commands/projectsCommand";
 
 export const registry = {
   help,
@@ -19,5 +20,6 @@ export const registry = {
   mkdir,
   touch,
   rm,
-  tree
+  tree,
+  project: projectsCommand,
 };
