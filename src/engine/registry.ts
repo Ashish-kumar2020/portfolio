@@ -11,6 +11,8 @@ import { tree } from "../commands/tree";
 import { projectsCommand } from "../commands/projectsCommand";
 import { skillsCommand } from "../commands/skills";
 import { experienceCommand } from "../commands/experience";
+import { contactCommand } from "../commands/contact";
+import { resumeCommand } from "../commands/resume";
 
 export const registry = {
   help,
@@ -26,4 +28,6 @@ export const registry = {
   project: projectsCommand,
   skills: skillsCommand,
   experience: experienceCommand,
+  contact: contactCommand,
+  resume: resumeCommand
 };
