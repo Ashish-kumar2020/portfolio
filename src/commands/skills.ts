@@ -1,6 +1,6 @@
 import type { CommandResult } from "../types/command";
 import type { TerminalContext } from "../types/terminal";
-import { skills } from "../data/skills";
+import { skills } from "../data/portfolio/skills";
 import { progressBar } from "../utils/progressBar";
 
 export function skillsCommand(

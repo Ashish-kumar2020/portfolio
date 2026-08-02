@@ -1,6 +1,6 @@
 import type { CommandResult } from "../types/command";
 import type { TerminalContext } from "../types/terminal";
-import { projects } from "../data/projects";
+import { projects } from "../data/portfolio/projects";
 
 export function projectsCommand(
   _context: TerminalContext,
