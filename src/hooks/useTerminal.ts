@@ -3,14 +3,21 @@ import { execute } from "../engine/executor";
 import { parse } from "../engine/parser";
 import type { TerminalContext } from "../types/terminal";
 import { root } from "../filesystem/fileSystem";
+import { welcomeMessage } from "../data/portfolio/welcome";
 
 export interface HistoryItem {
   command: string;
   output: string;
+  path: string[];
 }
 
 export function useTerminal() {
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState([
+    {
+      command: "",
+      output: welcomeMessage,
+    },
+  ]);
   const [input, setInput] = useState("");
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
