@@ -6,6 +6,7 @@ import { cat } from "../commands/cat";
 import { clear } from "../commands/clear";
 import { mkdir } from "../commands/mkdir";
 import { touch } from "../commands/touch";
+import { rm } from "../commands/rm";
 
 export const registry = {
   help,
@@ -15,5 +16,6 @@ export const registry = {
   cat,
   clear,
   mkdir,
-  touch
+  touch,
+  rm
 };
