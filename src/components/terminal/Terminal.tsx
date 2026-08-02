@@ -4,6 +4,7 @@ import { useTheme } from "../../hooks/useTheme";
 
 import TerminalHistory from "./TerminalHistory";
 import TerminalInput from "./TerminalInput";
+import CRTEffect from "../effects/CRTEffect";
 
 export default function Terminal() {
   const { colors, setTheme } = useTheme();
@@ -42,7 +43,7 @@ export default function Terminal() {
     >
       {/* Terminal Window */}
       <div
-        className="w-[900px] h-[650px] rounded-xl shadow-2xl overflow-hidden flex flex-col"
+        className="relative w-[900px] h-[650px] rounded-xl shadow-2xl overflow-hidden flex flex-col"
         style={{
           backgroundColor: colors.background,
           border: `1px solid ${colors.border}`,
@@ -89,6 +90,7 @@ export default function Terminal() {
 
           <div ref={bottomRef} />
         </div>
+        <CRTEffect />
       </div>
     </div>
   );
