@@ -3,7 +3,7 @@ import Prompt from "./Prompt";
 
 interface Props {
   history: HistoryItem[];
-  path: string[];
+ 
 }
 
 export default function TerminalHistory({

@@ -1,7 +1,10 @@
 import { useState } from "react";
+
 import { execute } from "../engine/executor";
 import { parse } from "../engine/parser";
+
 import type { TerminalContext } from "../types/terminal";
+
 import { root } from "../filesystem/fileSystem";
 import { welcomeMessage } from "../data/portfolio/welcome";
 
@@ -12,14 +15,18 @@ export interface HistoryItem {
 }
 
 export function useTerminal() {
-  const [history, setHistory] = useState([
+  const [history, setHistory] = useState<HistoryItem[]>([
     {
       command: "",
       output: welcomeMessage,
+      path: [],
     },
   ]);
+
   const [input, setInput] = useState("");
+
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
+
   const [historyIndex, setHistoryIndex] = useState(-1);
 
   const [context] = useState<TerminalContext>({
@@ -29,23 +36,37 @@ export function useTerminal() {
 
   function runCommand() {
     if (!input.trim()) return;
+
     const parsed = parse(input);
 
+    // Handle clear separately
     if (parsed.command === "clear") {
-      setHistory([]);
+      setHistory([
+        {
+          command: "",
+          output: welcomeMessage,
+          path: [],
+        },
+      ]);
+
       setInput("");
+      setHistoryIndex(-1);
       return;
     }
-    const result = execute(input, context);
+
+    const result = execute(parsed, context);
 
     setHistory((prev) => [
       ...prev,
       {
         command: input,
         output: result.output,
+        path: [...context.currentPath],
       },
     ]);
+
     setCommandHistory((prev) => [...prev, input]);
+
     setHistoryIndex(-1);
 
     setInput("");
@@ -56,6 +77,7 @@ export function useTerminal() {
     input,
     setInput,
     runCommand,
+
     context,
 
     commandHistory,
