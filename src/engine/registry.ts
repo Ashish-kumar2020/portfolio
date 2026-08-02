@@ -7,6 +7,7 @@ import { clear } from "../commands/clear";
 import { mkdir } from "../commands/mkdir";
 import { touch } from "../commands/touch";
 import { rm } from "../commands/rm";
+import { tree } from "../commands/tree";
 
 export const registry = {
   help,
@@ -17,5 +18,6 @@ export const registry = {
   clear,
   mkdir,
   touch,
-  rm
+  rm,
+  tree
 };
