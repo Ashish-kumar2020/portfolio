@@ -6,6 +6,8 @@ import TerminalHistory from "./TerminalHistory";
 import TerminalInput from "./TerminalInput";
 
 export default function Terminal() {
+  const { colors, setTheme } = useTheme();
+
   const {
     history,
     input,
@@ -15,9 +17,9 @@ export default function Terminal() {
     commandHistory,
     historyIndex,
     setHistoryIndex,
-  } = useTerminal();
-
-  const { colors } = useTheme();
+  } = useTerminal({
+    setTheme,
+  });
 
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -53,7 +55,6 @@ export default function Terminal() {
             borderBottom: `1px solid ${colors.border}`,
           }}
         >
-          {/* macOS buttons */}
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500" />
             <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -72,10 +73,7 @@ export default function Terminal() {
             color: colors.foreground,
           }}
         >
-          <TerminalHistory
-            history={history}
-           
-          />
+          <TerminalHistory history={history} />
 
           <TerminalInput
             path={context.currentPath}

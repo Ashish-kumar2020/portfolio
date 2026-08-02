@@ -4,9 +4,14 @@ import { execute } from "../engine/executor";
 import { parse } from "../engine/parser";
 
 import type { TerminalContext } from "../types/terminal";
+import type { Theme } from "../types/theme";
 
 import { root } from "../filesystem/fileSystem";
 import { welcomeMessage } from "../data/portfolio/welcome";
+
+interface UseTerminalProps {
+  setTheme: (theme: Theme) => void;
+}
 
 export interface HistoryItem {
   command: string;
@@ -14,7 +19,9 @@ export interface HistoryItem {
   path: string[];
 }
 
-export function useTerminal() {
+export function useTerminal({
+  setTheme,
+}: UseTerminalProps) {
   const [history, setHistory] = useState<HistoryItem[]>([
     {
       command: "",
@@ -32,6 +39,7 @@ export function useTerminal() {
   const [context] = useState<TerminalContext>({
     currentPath: [],
     root: structuredClone(root),
+    setTheme,
   });
 
   function runCommand() {
@@ -39,7 +47,6 @@ export function useTerminal() {
 
     const parsed = parse(input);
 
-    // Handle clear separately
     if (parsed.command === "clear") {
       setHistory([
         {
@@ -77,9 +84,7 @@ export function useTerminal() {
     input,
     setInput,
     runCommand,
-
     context,
-
     commandHistory,
     historyIndex,
     setHistoryIndex,

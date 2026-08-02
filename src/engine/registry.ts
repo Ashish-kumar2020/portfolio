@@ -13,6 +13,7 @@ import { skillsCommand } from "../commands/skills";
 import { experienceCommand } from "../commands/experience";
 import { contactCommand } from "../commands/contact";
 import { resumeCommand } from "../commands/resume";
+import { themeCommand } from "../commands/theme";
 
 export const registry = {
   help,
@@ -29,5 +30,6 @@ export const registry = {
   skills: skillsCommand,
   experience: experienceCommand,
   contact: contactCommand,
-  resume: resumeCommand
+  resume: resumeCommand,
+  theme: themeCommand,
 };
