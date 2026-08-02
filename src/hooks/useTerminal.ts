@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { execute } from "../engine/executor";
-
+import {parse} from "../engine/parser"
 export interface HistoryItem {
   command: string;
   output: string;
@@ -18,7 +18,13 @@ export function useTerminal() {
 
   function runCommand() {
     if (!input.trim()) return;
+    const parsed = parse(input);
 
+    if (parsed.command === "clear") {
+      setHistory([]);
+      setInput("");
+      return;
+    }
     const result = execute(input, context);
 
     setHistory((prev) => [
